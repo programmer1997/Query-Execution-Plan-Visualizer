@@ -15,7 +15,7 @@ PUBID, AID (both primary)
 
 
 
-ER Approach for subclasses
+##ER Approach for subclasses
 
 ### Incollection
 PUBID, book title
