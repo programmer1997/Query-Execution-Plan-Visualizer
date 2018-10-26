@@ -1,48 +1,69 @@
 import json
-import os
 from tkinter import *
 from Node import Node
 
-NODE_WIDTH=100
-NODE_HEIGHT=100
+
+NODE_WIDTH=50
+NODE_HEIGHT=50
 CANVAS_WIDTH=1000
 CANVAS_HEIGHT=1000
 node_list=[]
+instance_dict={}
 
-def clicked(*args):
+def clicked(event,canvas):
     '''
     Evoked when nodes or text is clicked
     '''
     #TODO: Add a pop-up about information when clicked
-    print("clicked")
 
-def draw_query_plan(data):
+
+    node=node_list[event.widget.find_withtag("current")[0]-1]
+    if node in instance_dict.keys():
+        canvas.delete(instance_dict[node])
+        del instance_dict[node]
+    else:
+        instance=canvas.create_text((node.center[0]-(NODE_WIDTH/2),node.center[1]-(NODE_HEIGHT/2)),text="How are you")
+        instance_dict[node]=instance
+
+
+
+
+
+def draw_query_plan(path):
     '''
     Main method to be called to draw query plan
     :param path:path to json file
+
     '''
-    # cwd = os.getcwd()
-    # datapath = cwd + '/' + path
-    # print(datapath)
-    # data = open(datapath).read()
-    # data = json.loads(data)
-    node_list.append(Node(0, CANVAS_WIDTH, 0, NODE_HEIGHT))
+    data = open(path).read()
+    data = json.loads(data)[0]["Plan"]
+    node_list.append(Node(0, CANVAS_WIDTH,10, NODE_HEIGHT))
     build_node_list(data, node_list[0])
     # actual drawing
     root = Tk()
     root.geometry("1000x1000")
     canvas = Canvas(root, width=1000, height=1000)
     canvas.pack()
+    # 3 different for loops are needed for logical binding of rectangles in the node_list
     for element in node_list:
         x = element.center[0]
         y = element.center[1]
-        canvas.create_rectangle(x - NODE_WIDTH / 2, y + NODE_HEIGHT / 2, x + NODE_WIDTH / 2, y - NODE_HEIGHT / 2,
-                                fill='grey', tags="click_event")
-        canvas.create_text((x, y), text=element.text, tags="click_event")
+        rect=canvas.create_rectangle(x - NODE_WIDTH / 2, y + NODE_HEIGHT / 2, x + NODE_WIDTH / 2, y - NODE_HEIGHT / 2,
+                                fill='grey',tags="clicked")
+
+    for element in node_list:
+        canvas.create_text((element.center[0], element.center[1]), text=element.text,tags="clicked")
+
+    for element in node_list:
         for child in element.children:
-            canvas.create_line(child.center[0], child.center[1] - NODE_HEIGHT / 2, x, y + NODE_HEIGHT / 2, arrow=LAST)
-    canvas.tag_bind("click_event", "<Button-1>", clicked)
+            canvas.create_line(child.center[0], child.center[1] - NODE_HEIGHT / 2, element.center[0], element.center[1]+ NODE_HEIGHT / 2, arrow=LAST)
+
+    canvas.tag_bind("clicked","<Button-1>", lambda event:clicked(event,canvas=canvas))
+
     root.mainloop()
+
+
+
 
 def build_node_list(plan, obj):
     '''
@@ -59,14 +80,3 @@ def build_node_list(plan, obj):
             node_list.append(child_obj)
             obj.children.append(child_obj)
             build_node_list(plan["Plans"][i], child_obj)
-
-
-
-
-
-
-
-
-
-
-
