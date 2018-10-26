@@ -1,14 +1,13 @@
 import json
+import os
 from tkinter import *
 from Node import Node
 
-
-NODE_WIDTH=50
-NODE_HEIGHT=50
+NODE_WIDTH=100
+NODE_HEIGHT=100
 CANVAS_WIDTH=1000
 CANVAS_HEIGHT=1000
 node_list=[]
-
 
 def clicked(*args):
     '''
@@ -17,15 +16,16 @@ def clicked(*args):
     #TODO: Add a pop-up about information when clicked
     print("clicked")
 
-
-def draw_query_plan(path):
+def draw_query_plan(data):
     '''
     Main method to be called to draw query plan
     :param path:path to json file
-
     '''
-    data = open(path).read()
-    data = json.loads(data)[0]["Plan"]
+    # cwd = os.getcwd()
+    # datapath = cwd + '/' + path
+    # print(datapath)
+    # data = open(datapath).read()
+    # data = json.loads(data)
     node_list.append(Node(0, CANVAS_WIDTH, 0, NODE_HEIGHT))
     build_node_list(data, node_list[0])
     # actual drawing
@@ -43,9 +43,6 @@ def draw_query_plan(path):
             canvas.create_line(child.center[0], child.center[1] - NODE_HEIGHT / 2, x, y + NODE_HEIGHT / 2, arrow=LAST)
     canvas.tag_bind("click_event", "<Button-1>", clicked)
     root.mainloop()
-
-
-
 
 def build_node_list(plan, obj):
     '''

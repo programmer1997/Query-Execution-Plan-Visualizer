@@ -1,0 +1,69 @@
+{
+    "Node Type": "Aggregate",
+    "Strategy": "Sorted",
+    "Partial Mode": "Finalize",
+    "Parallel Aware": false,
+    "Startup Cost": 116454.22,
+    "Total Cost": 116454.37,
+    "Plan Rows": 6,
+    "Plan Width": 19,
+    "Group Key": [
+        "pub_type"
+    ],
+    "Plans": [
+        {
+            "Node Type": "Sort",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Startup Cost": 116454.22,
+            "Total Cost": 116454.25,
+            "Plan Rows": 12,
+            "Plan Width": 19,
+            "Sort Key": [
+                "pub_type"
+            ],
+            "Plans": [
+                {
+                    "Node Type": "Gather",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Startup Cost": 116452.75,
+                    "Total Cost": 116454.01,
+                    "Plan Rows": 12,
+                    "Plan Width": 19,
+                    "Workers Planned": 2,
+                    "Single Copy": false,
+                    "Plans": [
+                        {
+                            "Node Type": "Aggregate",
+                            "Strategy": "Hashed",
+                            "Partial Mode": "Partial",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Startup Cost": 115452.75,
+                            "Total Cost": 115452.81,
+                            "Plan Rows": 6,
+                            "Plan Width": 19,
+                            "Group Key": [
+                                "pub_type"
+                            ],
+                            "Plans": [
+                                {
+                                    "Node Type": "Seq Scan",
+                                    "Parent Relationship": "Outer",
+                                    "Parallel Aware": true,
+                                    "Relation Name": "publication",
+                                    "Alias": "publication",
+                                    "Startup Cost": 0.0,
+                                    "Total Cost": 106482.83,
+                                    "Plan Rows": 1793983,
+                                    "Plan Width": 11
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
