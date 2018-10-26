@@ -22,7 +22,7 @@ def clicked(event,canvas):
         canvas.delete(instance_dict[node])
         del instance_dict[node]
     else:
-        instance=canvas.create_text((node.center[0]-(NODE_WIDTH/2),node.center[1]-(NODE_HEIGHT/2)),text="How are you")
+        instance=canvas.create_text((node.center[0],node.center[1]-(NODE_HEIGHT/2)-10),text="How are you",fill="blue")
         instance_dict[node]=instance
 
 
