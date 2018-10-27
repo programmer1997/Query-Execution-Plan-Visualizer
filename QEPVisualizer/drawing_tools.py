@@ -37,7 +37,7 @@ def draw_query_plan(path):
     '''
     data = open(path).read()
     data = json.loads(data)[0]["Plan"]
-    node_list.append(Node(0, CANVAS_WIDTH,10, NODE_HEIGHT))
+    node_list.append(Node(0, CANVAS_WIDTH,50, NODE_HEIGHT))
     build_node_list(data, node_list[0])
     # actual drawing
     root = Tk()
