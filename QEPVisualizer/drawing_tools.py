@@ -29,19 +29,18 @@ def clicked(event,canvas):
 
 
 
-def draw_query_plan(path):
+def draw_query_plan(data):
     '''
     Main method to be called to draw query plan
-    :param path:path to json file
+    :param data: json object
 
     '''
-    data = open(path).read()
-    data = json.loads(data)[0]["Plan"]
     node_list.append(Node(0, CANVAS_WIDTH,50, NODE_HEIGHT))
     build_node_list(data, node_list[0])
     # actual drawing
     root = Tk()
     root.geometry("1000x1000")
+    root.title("Query execution plan")
     canvas = Canvas(root, width=1000, height=1000)
     canvas.pack()
     # 3 different for loops are needed for logical binding of rectangles in the node_list
