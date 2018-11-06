@@ -9,6 +9,9 @@ CANVAS_WIDTH=1000
 CANVAS_HEIGHT=1000
 node_list=[]
 instance_dict={}
+# Maps GUI elements to logical elements
+visual_to_node={}
+
 
 def clicked(event,canvas):
     '''
@@ -17,12 +20,13 @@ def clicked(event,canvas):
     #TODO: Add a pop-up about information when clicked
 
 
-    node=node_list[event.widget.find_withtag("current")[0]-1]
+    node=visual_to_node[event.widget.find_withtag("current")[0]]
     if node in instance_dict.keys():
         canvas.delete(instance_dict[node])
         del instance_dict[node]
     else:
-        instance=canvas.create_text((node.center[0],node.center[1]-(NODE_HEIGHT/2)-10),text="How are you",fill="blue")
+
+        instance=canvas.create_text((node.center[0],node.center[1]-(NODE_HEIGHT/2)-10),text=node.text,fill="blue")
         instance_dict[node]=instance
 
 
@@ -35,6 +39,9 @@ def draw_query_plan(data):
     :param data: json object
 
     '''
+    #data = open(data).read()
+    #data= json.loads(data)[0]['Plan']
+
     node_list.append(Node(0, CANVAS_WIDTH,50, NODE_HEIGHT))
     build_node_list(data, node_list[0])
     # actual drawing
@@ -49,9 +56,11 @@ def draw_query_plan(data):
         y = element.center[1]
         rect=canvas.create_rectangle(x - NODE_WIDTH / 2, y + NODE_HEIGHT / 2, x + NODE_WIDTH / 2, y - NODE_HEIGHT / 2,
                                 fill='grey',tags="clicked")
+        visual_to_node[rect]=element
 
     for element in node_list:
-        canvas.create_text((element.center[0], element.center[1]), text=element.text,tags="clicked")
+        gui_text=canvas.create_text((element.center[0], element.center[1]), text=element.text,tags="clicked")
+        visual_to_node[gui_text]=element
 
     for element in node_list:
         for child in element.children:
