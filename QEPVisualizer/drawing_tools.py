@@ -8,9 +8,11 @@ NODE_HEIGHT = 50
 CANVAS_WIDTH = 1000
 CANVAS_HEIGHT = 1000
 node_list = []
-instance_dict = {}
+#instance_dict = {}
 # Maps GUI elements to logical elements
 visual_to_node = {}
+instance=None
+
 
 
 def clicked(event, canvas):
@@ -18,15 +20,16 @@ def clicked(event, canvas):
     Evoked when nodes or text is clicked
     '''
     # TODO: Add a pop-up about information when clicked
-
+    global instance
     node = visual_to_node[event.widget.find_withtag("current")[0]]
-    if node in instance_dict.keys():
-        canvas.delete(instance_dict[node])
-        del instance_dict[node]
-    else:
-        instance = canvas.create_text((node.center[0], node.center[1] - (NODE_HEIGHT / 2)), text=node.plan_info,
-                                      fill="blue")
-        instance_dict[node] = instance
+    # if node in instance_dict.keys():
+    #     canvas.delete(instance_dict[node])
+    #     del instance_dict[node]
+    # else:
+    if instance!=None: canvas.delete(instance)
+    instance = canvas.create_text(CANVAS_WIDTH/2,750, text=node.plan_info,
+                                      fill="blue",width=CANVAS_WIDTH)
+    #instance_dict[node] = instance
 
 
 def draw_query_plan(data):
@@ -45,6 +48,12 @@ def draw_query_plan(data):
     root.title("Query execution plan")
     canvas = Canvas(root, width=CANVAS_WIDTH, height=CANVAS_HEIGHT)
     canvas.pack()
+
+
+    # widget=Label(canvas,text="hello")
+    # widget.pack()
+    # canvas.create_window(100,100,window=widget)
+
     # 3 different for loops are needed for logical binding of rectangles in the node_list
     for element in node_list:
         x = element.center[0]
