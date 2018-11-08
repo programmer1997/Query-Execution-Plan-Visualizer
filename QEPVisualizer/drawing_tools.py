@@ -14,6 +14,18 @@ visual_to_node = {}
 instance=None
 
 
+def help(root):
+    help_info= open("help_info.txt").read()
+    help_window = Toplevel(root)
+    help_window.geometry("500x500")
+    help_window.title("Help")
+    help_canvas = Canvas(help_window, width=500, height=500)
+    help_canvas.pack()
+    help_canvas.create_text((250,250),text=help_info,width=500)
+
+
+
+
 
 def clicked(event, canvas):
     '''
@@ -48,6 +60,9 @@ def draw_query_plan(data):
     root.title("Query execution plan")
     canvas = Canvas(root, width=CANVAS_WIDTH, height=CANVAS_HEIGHT)
     canvas.pack()
+    help_button = Button(command=lambda: help(root), text="Help", anchor=W)
+    help_button.configure(width=10, activebackground="#33B5E5", relief=FLAT)
+    canvas.create_window(10, 10, anchor=NW, window=help_button)
 
 
     # widget=Label(canvas,text="hello")
