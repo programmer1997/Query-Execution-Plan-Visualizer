@@ -3,8 +3,8 @@ import os
 from tkinter import *
 from Node import Node
 
-NODE_WIDTH = 80
-NODE_HEIGHT = 80
+NODE_WIDTH = 90
+NODE_HEIGHT = 65
 CANVAS_WIDTH = 1000
 CANVAS_HEIGHT = 1000
 node_list = []
@@ -39,7 +39,6 @@ def clicked(event, canvas):
                                       fill="blue",width=CANVAS_WIDTH)
     #instance_dict[node] = instance
 
-
 def draw_query_plan(data):
     '''
     Main method to be called to draw query plan
@@ -55,10 +54,10 @@ def draw_query_plan(data):
     root.geometry("1000x1000")
     root.title("Query execution plan")
     canvas = Canvas(root, width=CANVAS_WIDTH, height=CANVAS_HEIGHT)
-    canvas.pack()
-    help_button = Button(command=lambda: help(root), text="Help", anchor=W)
+    help_button = Button(canvas,command=lambda: help(root), text="Help", anchor=W)
     help_button.configure(width=10, activebackground="#33B5E5", relief=FLAT)
     canvas.create_window(10, 10, anchor=NW, window=help_button)
+    canvas.pack()
 
     # widget=Label(canvas,text="hello")
     # widget.pack()
@@ -155,14 +154,14 @@ def getInfo(plan):
         return parsed_plan
 
     elif plan["Node Type"] == "Unique":
-        parsed_plan += "Each row is scanned from the sorted data, and duplicate elements (from the preceeding row) are eliminated."
+        parsed_plan = "Each row is scanned from the sorted data, and duplicate elements (from the preceeding row) are eliminated."
         
         duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
         parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Function Scan":
-        parsed_plan += "The function {} is executed and the resulting set of tuples is returned.".format(
+        parsed_plan = "The function {} is executed and the resulting set of tuples is returned.".format(
             plan["Function Name"])
         
         duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
@@ -201,7 +200,7 @@ def getInfo(plan):
         if "Index Cond" in plan:
             parsed_plan += " with conditions {}".format(plan["Index Cond"].replace('::text', ''))
         if "Filter" in plan:
-            parsed_plan += " The result is then filtered by {}.".format(plan["Filter"].replace('::text', ''))
+            parsed_plan += ".\nThe result is then filtered by {}.".format(plan["Filter"].replace('::text', ''))
 
         duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
         parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
@@ -212,7 +211,7 @@ def getInfo(plan):
         if "Index Cond" in plan:
             parsed_plan += " with the condition(s) {}.".format(plan["Index Cond"].replace('::text', ''))
         if "Filter" in plan:
-            parsed_plan += ". The result is then filtered by {}.".format(plan["Filter"].replace('::text', ''))
+            parsed_plan += ".\nThe result is then filtered by {}.".format(plan["Filter"].replace('::text', ''))
 
         duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
         parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
@@ -265,7 +264,7 @@ def getInfo(plan):
         parsed_plan += "."
 
         if "Filter" in plan:
-            parsed_plan += " This is bounded by the condition, "
+            parsed_plan += "\nThis is bounded by the condition, "
             parsed_plan += plan['Filter'].replace("::text", "")[1:-1]
             parsed_plan += "."
 
