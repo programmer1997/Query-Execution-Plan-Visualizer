@@ -3,8 +3,8 @@ import os
 from tkinter import *
 from Node import Node
 
-NODE_WIDTH = 50
-NODE_HEIGHT = 50
+NODE_WIDTH = 80
+NODE_HEIGHT = 80
 CANVAS_WIDTH = 1000
 CANVAS_HEIGHT = 1000
 node_list = []
@@ -22,10 +22,6 @@ def help(root):
     help_canvas = Canvas(help_window, width=500, height=500)
     help_canvas.pack()
     help_canvas.create_text((250,250),text=help_info,width=500)
-
-
-
-
 
 def clicked(event, canvas):
     '''
@@ -52,7 +48,7 @@ def draw_query_plan(data):
     '''
     # data = open(data).read()
     # data= json.loads(data)[0]['Plan']
-    node_list.append(Node(0, CANVAS_WIDTH,50, NODE_HEIGHT))
+    node_list.append(Node(0, CANVAS_WIDTH,100, NODE_HEIGHT))
     build_node_list(data, node_list[0])
     # actual drawing
     root = Tk()
@@ -63,7 +59,6 @@ def draw_query_plan(data):
     help_button = Button(command=lambda: help(root), text="Help", anchor=W)
     help_button.configure(width=10, activebackground="#33B5E5", relief=FLAT)
     canvas.create_window(10, 10, anchor=NW, window=help_button)
-
 
     # widget=Label(canvas,text="hello")
     # widget.pack()
@@ -87,9 +82,7 @@ def draw_query_plan(data):
                                element.center[1] + NODE_HEIGHT / 2, arrow=LAST)
 
     canvas.tag_bind("clicked", "<Button-1>", lambda event: clicked(event, canvas=canvas))
-
     root.mainloop()
-
 
 def build_node_list(plan, obj):
     '''
@@ -118,7 +111,7 @@ def getInfo(plan):
     if (plan["Node Type"] == "Aggregate"):
         if plan["Strategy"] == "Sorted":
             if "Group Key" in plan:
-                parsed_plan += "The attributes used for grouping the result are"
+                parsed_plan += "The attributes used for grouping the result are "
                 for group_key in plan["Group Key"]:
                     parsed_plan += group_key.replace("::text", "") + ", "
                 parsed_plan = parsed_plan[:-2]
@@ -129,18 +122,19 @@ def getInfo(plan):
             group_keys = ','.join([j.replace("::text", "")
                                    for j in plan["Group Key"]])
             parsed_plan += "All the rows are hashed based on the key {},".format(group_keys)
-            parsed_plan += "."
+            parsed_plan = parsed_plan[:-1] + '.'
 
         elif plan["Strategy"] == "Plain":
             parsed_plan = 'Aggregate'
-
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Append":
 
         parsed_plan += "The results of the scan are appended."
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "CTE Scan":
@@ -156,18 +150,23 @@ def getInfo(plan):
             parsed_plan += " the filtering condition applied is " + \
                            plan["Filter"].replace('::text', '') + "."
 
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Unique":
         parsed_plan += "Each row is scanned from the sorted data, and duplicate elements (from the preceeding row) are eliminated."
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Function Scan":
         parsed_plan += "The function {} is executed and the resulting set of tuples is returned.".format(
             plan["Function Name"])
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Group":
@@ -175,12 +174,16 @@ def getInfo(plan):
                                for j in plan["Group Key"][:-1]])
         parsed_plan += "The result from the previous operation is grouped together using the key "
         parsed_plan += group_keys + "."
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Hash":
         parsed_plan = "The hash function creates an in-memory hash with the tuples from the source."
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Hash Join":
@@ -188,7 +191,9 @@ def getInfo(plan):
             plan["Join Type"])
         if 'Hash Cond' in plan:
             parsed_plan += ' with condition {}.'.format(plan['Hash Cond'].replace("::text", ""))
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Index Scan":
@@ -198,7 +203,8 @@ def getInfo(plan):
         if "Filter" in plan:
             parsed_plan += " The result is then filtered by {}.".format(plan["Filter"].replace('::text', ''))
 
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Index Only Scan":
@@ -208,18 +214,23 @@ def getInfo(plan):
         if "Filter" in plan:
             parsed_plan += ". The result is then filtered by {}.".format(plan["Filter"].replace('::text', ''))
 
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Limit":
         planrows = plan["Plan Rows"]
         parsed_plan += "The table scanning is done, but with a limitation of " + str(planrows) + " items."
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Materialize":
         parsed_plan = "Holding the results in memory enables efficient accessing."
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Merge Join":
@@ -230,12 +241,16 @@ def getInfo(plan):
             parsed_plan += " however, the only row returned is that from the left table."
         else:
             parsed_plan += "."
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Nested Loop":
         parsed_plan = "Nested Loop Join."
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Seq Scan":
@@ -254,31 +269,40 @@ def getInfo(plan):
             parsed_plan += plan['Filter'].replace("::text", "")[1:-1]
             parsed_plan += "."
 
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Sort":
-        parsed_plan += "the result is sorted on the attribute "
+        parsed_plan = "The result is sorted on the attribute "
         if "DESC" in plan["Sort Key"]:
             parsed_plan += str(plan["Sort Key"].replace('DESC', '')) + " in desceding order."
         elif "INC" in plan["Sort Key"]:
             parsed_plan += str(plan["Sort Key"].replace('INC', '')) + " in increasing order."
         else:
             parsed_plan += str(plan["Sort Key"]) + "."
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Subquery Scan":
         parsed_plan = "A subquery scan is performed on the result from the previous operation."
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     elif plan["Node Type"] == "Values Scan":
         parsed_plan += "A scan through the given values from the query is performed."
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+        
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan
 
     else:
         parsed_plan = plan["Node Type"]
-        parsed_plan += "Duration taken: " + str(plan['Total Cost']) + "."
+    
+        duration = float(plan['Actual Total Time']) -float(plan['Actual Startup Time'])
+        parsed_plan += "\nDuration taken: " + str(round(duration,5)) + "ms"
         return parsed_plan

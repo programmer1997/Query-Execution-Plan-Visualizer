@@ -13,7 +13,7 @@ class getQuery():
         if query:
             self.query = query
             try:
-                self.cur.execute("EXPLAIN (FORMAT JSON) " + self.query)
+                self.cur.execute("EXPLAIN (ANALYZE, FORMAT JSON) " + self.query)
                 plan = self.cur.fetchall()
                 print(plan)
                 self.query_plan = plan[0][0][0]["Plan"]
