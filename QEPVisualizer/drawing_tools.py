@@ -17,6 +17,19 @@ MAX_DURATION=0
 # def on_mousewheel(event,canvas):
 #     canvas.yview_scroll(event.delta,"units")
 
+def enter(event,canvas):
+    node = visual_to_node[event.widget.find_withtag("current")[0]]
+    global instance
+    if node.duration == MAX_DURATION:
+        instance = canvas.create_text(200, 50, text=node.plan_info,
+                                      fill="red", width=350)
+    else:
+        instance = canvas.create_text(200, 50, text=node.plan_info,
+                                      fill="blue", width=350)
+
+
+def leave(event,canvas):
+    canvas.delete(instance)
 
 
 
@@ -101,7 +114,7 @@ def draw_query_plan(data):
         x = element.center[0]
         y = element.center[1]
         rect = canvas.create_rectangle(x - NODE_WIDTH / 2, y + NODE_HEIGHT / 2, x + NODE_WIDTH / 2, y - NODE_HEIGHT / 2,
-                                       fill='grey', tags="clicked")
+                                       fill='grey', tags="hover")
         visual_to_node[rect] = element
 
     for element in node_list:
@@ -114,6 +127,8 @@ def draw_query_plan(data):
                                element.center[1] + NODE_HEIGHT / 2, arrow=LAST)
 
     canvas.tag_bind("clicked", "<Button-1>", lambda event: clicked(event, canvas=canvas2))
+    canvas.tag_bind("hover","<Enter>",lambda event:enter(event,canvas=canvas2))
+    canvas.tag_bind("hover", "<Leave>", lambda event: leave(event,canvas=canvas2))
     root.mainloop()
 
 
