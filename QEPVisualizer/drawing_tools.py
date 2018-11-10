@@ -27,7 +27,7 @@ def help(root):
     help_window.title("Help")
     help_canvas = Canvas(help_window, width=500, height=500)
     help_canvas.pack()
-    help_canvas.create_text((850,200), text=help_info, width=200)
+    help_canvas.create_text((250,250), text=help_info, width=500)
 
 
 def clicked(event, canvas):
