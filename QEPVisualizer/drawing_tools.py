@@ -61,7 +61,7 @@ def draw_query_plan(data):
     '''
     # data = open(data).read()
     # data= json.loads(data)[0]['Plan']
-    node_list.append(Node(0, CANVAS_WIDTH, 100, NODE_HEIGHT))
+    node_list.append(Node(0, CANVAS_WIDTH,10, NODE_HEIGHT))
     build_node_list(data, node_list[0])
     global MAX_DURATION
     MAX_DURATION=max([x.duration for x in node_list])
