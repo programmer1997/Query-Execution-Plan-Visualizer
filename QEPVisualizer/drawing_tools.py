@@ -13,10 +13,10 @@ node_list = []
 visual_to_node = {}
 instance = None
 MAX_DURATION=0
-
+#
 # def on_mousewheel(event,canvas):
-#     #canvas.yview_scroll(event.delta,"units")
-#     print("")
+#     canvas.yview_scroll(event.delta,"units")
+
 
 
 
@@ -27,7 +27,7 @@ def help(root):
     help_window.title("Help")
     help_canvas = Canvas(help_window, width=500, height=500)
     help_canvas.pack()
-    help_canvas.create_text((250, 250), text=help_info, width=500)
+    help_canvas.create_text((850,200), text=help_info, width=200)
 
 
 def clicked(event, canvas):
@@ -43,11 +43,11 @@ def clicked(event, canvas):
     # else:
     if instance != None: canvas.delete(instance)
     if node.duration==MAX_DURATION:
-        instance = canvas.create_text(3 * CANVAS_WIDTH / 4, NODE_HEIGHT, text=node.plan_info,
-                                      fill="red", width=CANVAS_WIDTH / 4)
+        instance = canvas.create_text(200,50, text=node.plan_info,
+                                      fill="red", width=350)
     else:
-        instance = canvas.create_text(3 * CANVAS_WIDTH / 4, NODE_HEIGHT, text=node.plan_info,
-                                      fill="blue", width=CANVAS_WIDTH / 4)
+        instance = canvas.create_text(200,50, text=node.plan_info,
+                                      fill="blue", width=350)
 
 
     # instance_dict[node] = instance
@@ -80,7 +80,12 @@ def draw_query_plan(data):
     help_button.configure(width=10, activebackground="#33B5E5", relief=FLAT)
     canvas.create_window(10, 10, anchor=NW, window=help_button)
     canvas.pack()
-    # canvas.bind_all("<MouseWheel>", lambda event:on_mousewheel(event,canvas))
+    canvas2 = Canvas(frame, width=400, height=100)
+    canvas2.pack()
+    canvas2.place(x=600,y=0)
+    Misc.lift(canvas2)
+    Misc.lift(vbar)
+    #frame.bind("<MouseWheel>", lambda event:on_mousewheel(event,canvas))
 
 
     # widget=Label(canvas,text="hello")
@@ -104,7 +109,7 @@ def draw_query_plan(data):
             canvas.create_line(child.center[0], child.center[1] - NODE_HEIGHT / 2, element.center[0],
                                element.center[1] + NODE_HEIGHT / 2, arrow=LAST)
 
-    canvas.tag_bind("clicked", "<Button-1>", lambda event: clicked(event, canvas=canvas))
+    canvas.tag_bind("clicked", "<Button-1>", lambda event: clicked(event, canvas=canvas2))
     root.mainloop()
 
 
