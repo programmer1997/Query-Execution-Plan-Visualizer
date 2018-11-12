@@ -8,14 +8,10 @@ NODE_HEIGHT = 65
 CANVAS_WIDTH = 1000
 CANVAS_HEIGHT = 1000
 node_list = []
-# instance_dict = {}
 # Maps GUI elements to logical elements
 visual_to_node = {}
 instance = None
 MAX_DURATION=0
-#
-# def on_mousewheel(event,canvas):
-#     canvas.yview_scroll(event.delta,"units")
 
 def enter(event,canvas):
     node = visual_to_node[event.widget.find_withtag("current")[0]]
@@ -39,34 +35,27 @@ def help(root):
     help_canvas.pack()
     help_canvas.create_text(400, 420, text=help_info, width=800)
 
-def clicked(event, canvas):
-    '''
-    Evoked when nodes or text is clicked
-    '''
-    # TODO: Add a pop-up about information when clicked
-    global instance
-    node = visual_to_node[event.widget.find_withtag("current")[0]]
-    # if node in instance_dict.keys():
-    #     canvas.delete(instance_dict[node])
-    #     del instance_dict[node]
-    # else:
-    if instance != None: canvas.delete(instance)
-    if node.duration==MAX_DURATION:
-        instance = canvas.create_text(200,50, text=node.plan_info,
-                                      fill="red", width=350)
-    else:
-        instance = canvas.create_text(200,50, text=node.plan_info,
-                                      fill="blue", width=350)
+# def clicked(event, canvas):
+#     '''
+#     Evoked when nodes or text is clicked
+#     '''
 
-    # instance_dict[node] = instance
+#     global instance
+#     node = visual_to_node[event.widget.find_withtag("current")[0]]
+
+#     if instance != None: canvas.delete(instance)
+#     if node.duration==MAX_DURATION:
+#         instance = canvas.create_text(200,50, text=node.plan_info,
+#                                       fill="red", width=350)
+#     else:
+#         instance = canvas.create_text(200,50, text=node.plan_info,
+#                                       fill="blue", width=350)
 
 def draw_query_plan(data):
     '''
     Main method to be called to draw query plan
     :param data: json object
     '''
-    # data = open(data).read()
-    # data= json.loads(data)[0]['Plan']
     node_list.clear()
     node_list.append(Node(0, CANVAS_WIDTH,10, NODE_HEIGHT))
     build_node_list(data, node_list[0])

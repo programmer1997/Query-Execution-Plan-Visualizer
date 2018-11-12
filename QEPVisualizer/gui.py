@@ -10,7 +10,7 @@ class QueryInteractor(Tk):
         
         Tk.__init__(self, parent)
         self.parent = parent
-        self.minsize(width=480, height=480)
+        self.minsize(width=450, height=360)
         self.initializeUI(host, port, dbname, user, password)
 
     def initializeUI(self, host, port, dbname, user, password):
@@ -74,8 +74,7 @@ class QueryInteractor(Tk):
         
         self.queryPlan = getQuery(self.entry_var_host.get(), self.entry_var_port.get(), 
         self.entry_var_database.get(), self.entry_var_username.get(), self.entry_var_password.get())
-        query = self.entry_query.get("1.0", END) ## gets the query from the field
-        # self.queryPlan.getQueryPlan(query=query) ## this calls the function to generate the explain JSON
+        query = self.entry_query.get("1.0", END)
         drawing_tools.draw_query_plan(self.queryPlan.getQueryPlan(query=query))
 
 def main():
