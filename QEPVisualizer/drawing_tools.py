@@ -103,7 +103,7 @@ def draw_query_plan(data):
             canvas.create_line(child.center[0], child.center[1] - NODE_HEIGHT / 2, element.center[0],
                                element.center[1] + NODE_HEIGHT / 2, arrow=LAST)
 
-    canvas.tag_bind("clicked", "<Button-1>", lambda event: clicked(event, canvas=canvas2))
+    # canvas.tag_bind("clicked", "<Button-1>", lambda event: clicked(event, canvas=canvas2))
     canvas.tag_bind("hover","<Enter>",lambda event:enter(event,canvas=canvas2))
     canvas.tag_bind("hover", "<Leave>", lambda event: leave(event,canvas=canvas2))
     root.mainloop()
