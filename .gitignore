@@ -2,3 +2,6 @@
 QEPVisualizer/drawing_tools.py
 *.py
 QEPVisualizer/drawing_tools.py
+QEPVisualizer/help_info.txt
+QEPVisualizer/explainQuery.py
+QEPVisualizer/help_info.txt

@@ -1,23 +1,43 @@
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
+Hover over each rectangle which indicates the action which is carried out. 
+Information about the node will be displayed with its time taken. 
+The step which takes the longest will be indicated in red text. 
 
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
-sßssßpiabpiubPIUBIUBIUBPIUBIUBIUBUBIupnfo WHEFio hweifmxhIODJWHT AROIN[onroIWNROiwnrogiNWO'RING[oinw[oeininininininininininininininininin
+Here are some info about each action.
+
+Aggregate : An aggregate function computes a single result from multiple input rows.
+
+Append : Results of the scan are appended.
+
+CTE Scan : A "CTE scan" is a sequential scan of the materialized results of a Common Table Expression (CTE) term.
+
+Unique : Each row is scanned from the sorted data, and duplicate elements (from the preceeding row) are eliminated.
+
+Function Scan : A particular function is executed and the resulting set of tuples is returned.
+
+Group : The result from the previous operation is grouped together using the group key.
+
+Hash : The hash function creates an in-memory hash with the tuples from the source.
+
+Hash Join : The hash join loads the candidate records from one side of the join into a hash table (marked with Hash in the plan) which is then probed for each record from the other side of the join.
+
+Index Scan : The Index Scan performs a B-tree traversal, walks through the leaf nodes to find all matching entries, and fetches the corresponding table data.
+
+Index Only Scan : The Index Only Scan performs a B-tree traversal and walks through the leaf nodes to find all matching entries.
+
+Limit : Aborts the underlying operations when the desired number of rows has been fetched.
+
+Materialize : Holding the results in memory enables efficient accessing.
+
+Merge Join : The merge join combines two sorted lists like a zipper. Both sides of the join must be presorted.
+
+Nested Loop : Joins two tables by fetching the result from one table and querying the other table for each row from the first.
+
+Seq Scan : The Seq Scan operation scans the entire relation (table) as stored on disk.
+ 
+Sort : Sorts the set on the columns mentioned in Sort Key.
+
+Subquery Scan: A subquery scan is performed on the result from the previous operation.
+
+Values Scan: A scan through the given values from the query is performed.
+
+
