@@ -1,6 +1,0 @@
--DentityExpansionLimit=2500000
--Xms4096M 
--Xmx8196M
--XX:-UseGCOverheadLimit
-
-## Run based on your machine limits
